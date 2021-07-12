@@ -7,16 +7,20 @@
     "lint": "eslint ./src ./test --ext .ts --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
     "start:dev": "ts-node-dev src/index.ts",
-    "test": "jest",
+    "test": "jest --maxWorkers=50% --passWithNoTests --no-cache",
+    "test:unit": "npm test -- --watch",
+    "test:staged": "npm test -- --findRelatedTests",
     "test:functional": "jest --projects ./test --runInBand",
     "prepare": "husky install"
   },
   "lint-staged":{
     "src/**/*": [
-      "npm run lint:fix"
+      "npm run lint:fix",
+      "npm run test:staged"
     ],
     "test/**/*": [
-      "npm run lint:fix"
+      "npm run lint:fix",
+      "npm run test:staged"
     ]
   },
   "author": "David Sylvestre <davi.sylvestre@gmail.com>",
